@@ -15,7 +15,12 @@ https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/
 https://emanual.robotis.com/docs/en/platform/turtlebot3/manipulation/#bringup
 
 3. Clone the project to your catkin/src:
-git clone 
+git clone https://github.com/THeBest-png/Msc.git
+
+4. catkin make your workspace
+cd catkin
+catkin_make
+
 final src file should contain the following files:
 hls_lfcd_lds_driver, open_manipulator_dependencies, point_cloud_edge_and_corner_detection
 turtlebot3_manipulation, turtlebot3_manipulation_simulations, turtlebot3_simulations
