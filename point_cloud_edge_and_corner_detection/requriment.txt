@@ -1,0 +1,6 @@
+torch                           1.13.1
+torchaudio                      0.13.1
+torchvision                     0.14.1
+open3d                          0.13.0
+numpy                           1.24.3
+scikit-spatial                  7.0.0

@@ -1,0 +1,46 @@
+<launch>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [waffle, waffle_pi]"/>
+  <arg name="gui" default="false"/>
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  
+
+  <rosparam file="$(find turtlebot3_manipulation_gazebo)/config/gazebo_controller.yaml" command="load"/>
+
+  <!-- startup simulated world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_house.world"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+  </include>
+
+  <!-- send robot urdf to param server -->
+  <param name="robot_description" 
+  command="$(find xacro)/xacro --inorder '$(find point_cloud_edge_and_corner_detection)/urdf/turtlebot3_manipulation_robot.urdf.xacro'"/>
+
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="50.0" />
+  </node>
+
+  <!-- push robot_description to factory and spawn robot in gazebo -R 0 -P 0 -Y 1.57 y == 0.6-->
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+    args="-urdf -param robot_description -model robot -x 0.1 -y 0.1 -z 0.0 
+    -R 0 -P 0 -Y 1.57
+    -J joint1 0.0 -J joint2 -1.04 -J joint3 1.04 -J joint4 0.0 -J gripper 0.0 -J gripper_sub 0.0"/>
+
+  <!-- controller utils -->
+  <include file="$(find turtlebot3_manipulation_gazebo)/launch/controller_utils.launch"/>
+
+  <!-- run controllers -->
+  <include file="$(find turtlebot3_manipulation_gazebo)/launch/turtlebot3_manipulation_controller.launch"/>
+
+  <!-- run move group -->
+  <include file="$(find turtlebot3_manipulation_moveit_config)/launch/move_group.launch"/>
+
+  <!--run rviz -->
+  <include file="$(find point_cloud_edge_and_corner_detection)/launch/rviz.launch"/>
+
+
+  <node pkg="point_cloud_edge_and_corner_detection" name="point_cloud_service" type="pointcloud.py" output="screen" />
+</launch>

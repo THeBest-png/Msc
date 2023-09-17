@@ -1,0 +1,8 @@
+
+---
+float64 arm_x
+float64 arm_y
+float64 arm_z
+float64 wall_x
+float64 wall_y
+float64 wall_z

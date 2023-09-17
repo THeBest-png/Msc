@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot name="turtlebot3_manipulation" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Include TurtleBot3 Waffle URDF -->
+  <xacro:include filename="$(find point_cloud_edge_and_corner_detection)/urdf/waffle_pi_with_arm.urdf.xacro"/>
+
+  <!-- Include OpenMANIPULATOR URDF -->
+  <xacro:include filename="$(find point_cloud_edge_and_corner_detection)/urdf/open_manipulator_x.urdf.xacro"/>
+
+  <!-- Include realsense_d435 URDF 
+  <xacro:realsense_d435 sensor_name="d435" parent_link="camera_link" rate="30">
+    <origin rpy="0 0 0 " xyz="0 0 0"/>
+  </xacro:realsense_d435>-->
+
+
+  <!-- Base fixed joint -->
+  <joint name="base_fixed" type="fixed">
+    <origin xyz="-0.092 0.0 0.091" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="link1"/>
+  </joint>
+
+</robot>

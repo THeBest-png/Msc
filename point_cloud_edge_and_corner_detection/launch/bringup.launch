@@ -1,0 +1,32 @@
+<launch>
+
+
+  <include file= "$(find realsense2_camera)/launch/rs_camera.launch">
+    <arg name="filters" value="pointcloud" />
+    <arg name="clip_distance" value="1.0" />
+
+  </include>
+
+  
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="50.0" />
+  </node>
+  
+  <include file= "$(find turtlebot3_bringup)/launch/turtlebot3_robot.launch" >
+  </include>
+
+  <include file= "$(find turtlebot3_manipulation_bringup)/launch/turtlebot3_manipulation_bringup.launch" >
+  </include>
+  <!-- run move group -->
+  <include file="$(find turtlebot3_manipulation_moveit_config)/launch/move_group.launch">
+    <arg name="load_robot_description" value="true" />
+  </include>
+
+  <!--run rviz -->
+  <include file="$(find point_cloud_edge_and_corner_detection)/launch/rviz.launch"/>
+
+
+  <node pkg="point_cloud_edge_and_corner_detection" name="move_arm_service" type="move_arm_service.py" output="screen" />
+  <node pkg="point_cloud_edge_and_corner_detection" name="move_turtle_service" type="move_turtle.py" output="screen" />
+
+</launch>
