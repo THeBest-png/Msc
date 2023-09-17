@@ -14,6 +14,8 @@ https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/
 2. Install packages for open manipulator and turtlebot3
 https://emanual.robotis.com/docs/en/platform/turtlebot3/manipulation/#bringup
 
+3. Clone the project to your catkin/src:
+git clone 
 final src file should contain the following files:
 hls_lfcd_lds_driver, open_manipulator_dependencies, point_cloud_edge_and_corner_detection
 turtlebot3_manipulation, turtlebot3_manipulation_simulations, turtlebot3_simulations
